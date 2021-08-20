@@ -4,14 +4,19 @@ class Tabs extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: 0
+            tabIndex: 0
         }
 
         this.activeTab = this.activeTab.bind(this);
     }
 
     activeTab(num) {
-        this.setState({selected: num})
+        this.setState({tabIndex: num})
+    }
+
+    clickedTab() {
+        console.log("clicked");
+        return this.props.key
     }
 
     render() {
@@ -20,15 +25,20 @@ class Tabs extends React.Component {
         const allTabs = titles.map((title, i) => {
             return (
                 <Header
+                    key = {`${i}`}
                     title = {title}
-                    selected = {this.activeTab(i)}
+                    activated = {i === this.state.tabIndex}
                     content = {content[i]}
+                    onClick = {this.clickedTab()}
                 />
             );
         });
 
         return (
-            <li>{allTabs}</li>
+            <ul>
+                <li>{allTabs} {content} </li>
+            </ul>
+            
         )
 
     }
@@ -37,11 +47,13 @@ class Tabs extends React.Component {
 class Header extends React.Component {
     render () {
         return (
+            <ul>
+                <li>
+                    {this.props.title}
+                    {this.props.selected}
+                </li>
+            </ul>
             
-            <li>
-                {this.props.title}
-                {this.props.selected}
-            </li>
         )
     }
 }
